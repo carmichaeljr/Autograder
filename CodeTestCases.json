@@ -1,0 +1,52 @@
+{
+	"tests": [
+		{
+			"commentTest": {
+				"applyTo": "code",
+				"points": "5",
+				"comment": "Not enough comment coverage",
+				"percentage": "25",
+				"symbol": "#"
+			}
+		},
+		{
+			"keywordTest": {
+				"applyTo": "code",
+				"points": "5",
+				"comment": "Pseudo instructions are not allowed",
+				"takeAwayPoints": "true",
+				"onePointPer": true,
+				"words": [
+					"pseudo",
+					"instru",
+					"list"
+				]
+			}
+		},
+		{
+			"executeTest": {
+				"applyTo": "code",
+				"points": "5",
+				"removeWhitespace": "true",
+				"outputConditional": "or",
+				"input": [
+
+				],
+				"output": [
+
+				],
+				"regVals": {
+					"s0": "60"
+				}
+			}
+		},
+		{
+			"lengthTest":{
+				"applyTo": "readme",
+				"points": "5",
+				"comment": "README was not sufficient.",
+				"minLines": "7"
+			}
+		}
+	]
+}
