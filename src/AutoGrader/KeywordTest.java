@@ -47,7 +47,7 @@ class KeywordTest extends Test {
 
 	private int getNumOccurancesInLine(String line){
 		int rv=0;
-		String[] splitLine=line.split(" |\\.|\\?|\\,|\\;|\\:|\\\"|\\\'|\\(|\\)|\\[|\\]|\\{|\\}");
+		String[] splitLine=line.split(" |\\?|\\,|\\;|\\:|\\\"|\\\'|\\(|\\)|\\[|\\]|\\{|\\}");
 		for (int i=0; i<splitLine.length; i++){
 			rv=(this.words.contains(splitLine[i].toLowerCase()))? ++rv: rv;
 		}
