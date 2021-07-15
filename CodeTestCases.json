@@ -15,7 +15,8 @@
 				"points": "5",
 				"comment": "Pseudo instructions are not allowed",
 				"takeAwayPoints": "true",
-				"onePointPer": true,
+				"onePointPer": "true",
+				"minNumOccurances": 0,
 				"words": [
 					"pseudo",
 					"instru",
@@ -38,6 +39,47 @@
 				"regVals": {
 					"s0": "60"
 				}
+			}
+		},
+		{
+			"keywordTest": {
+				"applyTo": "readme",
+				"points": "5",
+				"comment": "Pseudo code in README was not sufficient",
+				"takeAwayPoints": "false",
+				"onePointPer": "false",
+				"minNumOccurances": 10,
+				"words": [
+					"Pseudocode",
+					"pseudo",
+					"while",
+					"for",
+					"if",
+					"else",
+					"elif",
+					"true",
+					"false",
+					"exit",
+					"break",
+					"continue",
+					"void",
+					"int",
+					"float",
+					"double",
+					"include",
+					"shift",
+					"cin",
+					"cout",
+					"print",
+					"loop",
+					"index",
+					"==",
+					"++",
+					"<<",
+					">>",
+					"return",
+					"goto"
+				]
 			}
 		},
 		{

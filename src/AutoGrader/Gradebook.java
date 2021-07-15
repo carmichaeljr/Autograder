@@ -19,7 +19,10 @@ class Gradebook {
 	}
 
 	public static void save(){
-		System.out.println(Gradebook.inst.grades.toString());
+		//System.out.println(Gradebook.inst.grades.toString());
+		for (String iter: Gradebook.inst.grades.keySet()){
+			System.out.println(iter+": "+Gradebook.inst.grades.get(iter));
+		}
 	}
 
 	private Gradebook(){

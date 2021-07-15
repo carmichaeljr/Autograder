@@ -42,68 +42,25 @@ abstract class Test {
 		return this.applyTo;
 	}
 
-	abstract public Pair<Float,String> run(RarsProcManager rarsProcRef);
-}
-
-class LengthTest extends Test {
-	@SerializedName("minLines")
-	private int minLines;
-
-	public LengthTest(float points, String comment){
-		super(points,comment);
-		this.minLines=0;
+	public Pair<Float,String> gradingErrorFallback(String testType, String student){
+		Print.warning(String.format("An error occurred performing a %s on  %'s submission.",
+					testType,student));
+		return new Pair<Float,String>((float)0.0,
+				String.format("An error occurred performing a %s on  %'s submission.",
+					testType,student)
+				);
 	}
 
-	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef){
-		return new Pair<Float,String>(super.points,super.comment);
-	}
-}
-
-class CommentTest extends Test {
-	@SerializedName("percentage")
-	private float percentage;
-	@SerializedName("symbol")
-	private String symbol;
-
-	public CommentTest(float points, String comment, float percentage, String symbol){
-		super(points,comment);
-		this.percentage=percentage;
-		this.symbol=symbol;
+	protected String getTestFile(String student){
+		if (this.applyTo.equalsIgnoreCase("code") || this.applyTo.equalsIgnoreCase("assembly")){
+			return SubmissionManager.getCodeFile(student);
+		} else if (this.applyTo.equalsIgnoreCase("readme")){
+			return SubmissionManager.getReadmeFile(student);
+		}
+		return null;
 	}
 
-	public float getPercentage(){
-		return this.percentage;
-	}
-	public String getSymbol(){
-		return this.symbol;
-	}
-
-	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef){
-		return new Pair<Float,String>(super.points,super.comment);
-	}
-}
-
-class KeywordTest extends Test {
-	@SerializedName("takeAwayPoints")
-	private boolean takeAwayPoints;
-	@SerializedName("onePointPer")
-	private boolean onePointPer;
-	@SerializedName("words")
-	private ArrayList<String> words;
-
-	public KeywordTest(float points, String comment){
-		super(points,comment);
-		this.takeAwayPoints=false;
-		this.onePointPer=false;
-		this.words=new ArrayList<String>();
-	}
-
-	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef){
-		return new Pair<Float,String>(super.points,super.comment);
-	}
+	abstract public Pair<Float,String> run(RarsProcManager rarsProcRef, String student);
 }
 
 class ExecuteTest extends Test {
@@ -127,7 +84,7 @@ class ExecuteTest extends Test {
 	}
 
 	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef){
+	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student){
 		return new Pair<Float,String>(super.points,super.comment);
 	}
 }
@@ -237,7 +194,7 @@ class TestSuiteRunner implements Runnable {
 		float studentScore=0;
 		ArrayList<String> comments=new ArrayList<String>();
 		for (int k=0; k<this.tests.size(); k++){
-			Pair<Float,String> result=this.tests.get(k).run(this.proc);
+			Pair<Float,String> result=this.tests.get(k).run(this.proc,student);
 			studentScore+=result.getKey();
 			if (result.getValue()!=null && result.getValue().length()>0){
 				comments.add(result.getValue());

@@ -1,4 +1,5 @@
 import java.util.HashSet;
+import java.util.ArrayList;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -18,9 +19,9 @@ public class HWData {
 	@SerializedName("numThreads")
 	private int numThreads;
 	@SerializedName("acceptedCodeFiles")
-	private HashSet<String> acceptedCodeFiles;
+	private ArrayList<String> acceptedCodeFiles;
 	@SerializedName("acceptedReadmeFiles")
-	private HashSet<String> acceptedReadmeFiles;
+	private ArrayList<String> acceptedReadmeFiles;
 	
 	public HWData(String hwName, String zippedSubmissions, String cleanedSubmissionsDir, String gradebook){
 		this.hwName=hwName;
@@ -47,10 +48,10 @@ public class HWData {
 	public int getNumThreads(){
 		return this.numThreads;
 	}
-	public HashSet<String> getAcceptedCodeFiles(){
+	public ArrayList<String> getAcceptedCodeFiles(){
 		return this.acceptedCodeFiles;
 	}
-	public HashSet<String> getAcceptedReadmeFiles(){
+	public ArrayList<String> getAcceptedReadmeFiles(){
 		return this.acceptedReadmeFiles;
 	}
 

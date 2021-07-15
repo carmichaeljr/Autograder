@@ -1,12 +1,15 @@
 import java.util.List;
 import java.util.HashSet;
+import java.util.ArrayList;
 import java.nio.file.Path;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.FileVisitResult;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
+import java.io.File;
 import java.io.IOException;
+import java.io.FilenameFilter;
 
 import net.lingala.zip4j.ZipFile;
 import net.lingala.zip4j.model.FileHeader;
@@ -29,15 +32,21 @@ public class SubmissionManager {
 		return rv;
 	}
 
-	public static Path getCodeFile(String student){
-		if (SubmissionsManager.inst.submisisons.contains(student)){
+	public static String getCodeFile(String student){
+		if (SubmissionManager.inst.submissions.contains(student)){
 			String temp=String.format("%s/%s",Settings.getHWData().getCleanedSubmissionsDir(),student);
-			return new Paths.get(temp);
+			return SubmissionManager.inst.getFileByPrecidence(Settings.getHWData().getAcceptedCodeFiles(),temp);
 		}
 		return null;
 	}
-	//getCodeFile
-	//getReadmeFile
+
+	public static String getReadmeFile(String student){
+		if (SubmissionManager.inst.submissions.contains(student)){
+			String temp=String.format("%s/%s",Settings.getHWData().getCleanedSubmissionsDir(),student);
+			return SubmissionManager.inst.getFileByPrecidence(Settings.getHWData().getAcceptedReadmeFiles(),temp);
+		}
+		return null;
+	}
 
 	public static void cleanUpAfterGrading(String student){
 		SubmissionManager.inst.deleteFromTempDir(student);
@@ -129,6 +138,25 @@ public class SubmissionManager {
 			Print.warning(String.format("An error occurred extracting submission files from the submission %s.",submission));
 			return false;
 		}
+	}
+
+	private String getFileByPrecidence(ArrayList<String> typePrecidence, String dir){
+		String rv=null;
+		File folder=new File(dir);
+		for (int i=0; i<typePrecidence.size() && rv==null; i++){
+			final String iterType=typePrecidence.get(i);
+			FilenameFilter filter=new FilenameFilter(){
+				@Override
+				public boolean accept(File dir, String name){
+					return name.endsWith(String.format(".%s",iterType));
+				}
+			};
+			File[] files=folder.listFiles(filter);
+			if (files.length>0){
+				rv=files[0].getAbsolutePath();
+			}
+		}
+		return rv;
 	}
 
 	private void deleteFromTempDir(String submission){
