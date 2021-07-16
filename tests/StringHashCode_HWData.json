@@ -1,0 +1,17 @@
+{
+	"hwName": "StringHashCode",
+	"zippedSubmissions": "tests/StringHashCode.zip",
+	"cleanedSubmissionsDir": "TEMP",
+	"gradebook": "tests/StringHashCode_Results.csv",
+	"numThreads": "2",
+	"students": [
+	],
+	"acceptedCodeFiles": [
+		"s",
+		"asm"
+	],
+	"acceptedReadmeFiles": [
+		"txt",
+		"md"
+	]
+}
