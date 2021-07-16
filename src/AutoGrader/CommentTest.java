@@ -39,8 +39,10 @@ class CommentTest extends Test {
 		if (file!=null){
 			try (BufferedReader br=new BufferedReader(new FileReader(file))){
 				for (String line; (line=br.readLine())!=null;){
-					comments=(line.contains(this.symbol))? ++comments: comments;
-					lines++;
+					if (line.length()>0){
+						comments=(line.contains(this.symbol))? ++comments: comments;
+						lines++;
+					}
 				}
 			} catch (IOException e){
 				throw e;

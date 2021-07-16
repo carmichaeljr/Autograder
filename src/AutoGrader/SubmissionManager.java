@@ -152,7 +152,7 @@ public class SubmissionManager {
 				}
 			};
 			File[] files=folder.listFiles(filter);
-			if (files.length>0){
+			if (files!=null && files.length>0){
 				rv=files[0].getAbsolutePath();
 			}
 		}

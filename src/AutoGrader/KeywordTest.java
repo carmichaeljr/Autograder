@@ -32,7 +32,7 @@ class KeywordTest extends Test {
 	}
 
 	private int getNumOccurances(String file) throws IOException {
-		int rv=-1;
+		int rv=0;
 		if (file!=null){
 			try (BufferedReader br=new BufferedReader(new FileReader(file))){
 				for (String line; (line=br.readLine())!=null;){
@@ -58,10 +58,12 @@ class KeywordTest extends Test {
 		if (this.minNumOccurances<=numOccurances){
 			if (this.onePointPer && this.takeAwayPoints){
 				//Min num keywords met, take one point away per keyword
-				return new Pair<Float,String>(Math.max(super.points-numOccurances,0),super.comment);
+				float points=Math.max(super.points-numOccurances,0);
+				String comment=(points==super.points)? "": super.comment;
+				return new Pair<Float,String>(points,comment);
 			} else if (this.onePointPer && !this.takeAwayPoints){
 				//Min num keywords met, give one point per keyword
-				return new Pair<Float,String>(Math.min(super.points,numOccurances),super.comment);
+				return new Pair<Float,String>(Math.min(super.points,numOccurances),"");
 			} else if (!this.onePointPer && !this.takeAwayPoints){
 				//Min num keywords met, give full points
 				return new Pair<Float,String>(super.points,"");

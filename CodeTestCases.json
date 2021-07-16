@@ -93,7 +93,6 @@
                 			"lhu",
                 			"neg",
                 			"nop",
-                			"not",
                 			"rdcycle",
                 			"rdcycleh",
                 			"rdinstret",
@@ -118,10 +117,9 @@
 				"removeWhitespace": "true",
 				"outputConditional": "or",
 				"input": [
-
 				],
 				"output": [
-
+					"56568"
 				],
 				"regVals": {
 					"s0": "60"

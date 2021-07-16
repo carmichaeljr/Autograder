@@ -17,6 +17,7 @@ public class RarsProc {
 	private static final String ASSEMBLY_ERROR="Error: Assembly";
 	private static final String SIMULATION_ERROR="Error: Simulation";
 	private static final String INFINITE_LOOP="\nError: InfiniteLoop";
+	private static final String SIM_COMPLETE_PRINT="SimulationComplete";
 	private static final RarsProc inst=new RarsProc();
 
 	public static void start(){
@@ -27,8 +28,10 @@ public class RarsProc {
 				RarsProc.inst.inputs.add(scanner.nextLine());
 			}
 			if (RarsProc.inst.procNeeded()){
-				RarsProc.inst.runSimulation();			
+				System.out.println("Running Simulation");
+				RarsProc.inst.runSimulation();
 				RarsProc.inst.printResults();
+				RarsProc.inst.printDone();
 			}
 		}
 		scanner.close();
@@ -92,6 +95,10 @@ public class RarsProc {
 	private void printResults(){
 		System.out.println(this.progOutput);
 		this.printRegisters();
+	}
+
+	private void printDone(){
+		System.out.println(RarsProc.SIM_COMPLETE_PRINT);
 	}
 
 	private void printRegisters(){

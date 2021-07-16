@@ -59,32 +59,6 @@ abstract class Test {
 	abstract public Pair<Float,String> run(RarsProcManager rarsProcRef, String student);
 }
 
-class ExecuteTest extends Test {
-	@SerializedName("removeWhitespace")
-	private boolean removeWhiteSpace;
-	@SerializedName("outputConditional")
-	private String outputConditional;
-	@SerializedName("input")
-	private ArrayList<String> inputs;
-	@SerializedName("output")
-	private ArrayList<String> outputs;
-	@SerializedName("regVals")
-	private HashMap<String,Integer> regVals;
-
-	public ExecuteTest(float points, boolean removeWhiteSpace, String outputConditional){
-		super(points,"");
-		this.removeWhiteSpace=removeWhiteSpace;
-		this.outputConditional=outputConditional;
-		this.inputs=new ArrayList<String>();
-		this.outputs=new ArrayList<String>();
-	}
-
-	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student){
-		return new Pair<Float,String>(super.points,super.comment);
-	}
-}
-
 class TestSuiteRunner implements Runnable {
 	private Thread thread;
 	private CountDownLatch latch;
@@ -101,7 +75,7 @@ class TestSuiteRunner implements Runnable {
 	}
 
 	public void run(){
-		System.out.println("Running: "+this.thread.getName());
+		//System.out.println("Running: "+this.thread.getName());
 		for (String student: this.students) {
 			//System.out.println("Grading: "+student);
 			if (SubmissionManager.prepareForGrading(student)){
@@ -111,7 +85,7 @@ class TestSuiteRunner implements Runnable {
 		}
 
 		this.latch.countDown();
-		System.out.println("Ending: "+this.thread.getName());
+		//System.out.println("Ending: "+this.thread.getName());
 		this.proc.destroy();
 	}
 
@@ -130,7 +104,7 @@ class TestSuiteRunner implements Runnable {
 	}
 
 	public void start(){
-		System.out.println("Starting: "+this.thread.getName());
+		//System.out.println("Starting: "+this.thread.getName());
 		this.thread.start();
 	}
 }

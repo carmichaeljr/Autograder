@@ -1,3 +1,4 @@
+import java.util.Set;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -12,8 +13,9 @@ class RarsProcManager {
 	private Process proc;
 	private BufferedReader in;
 	private BufferedWriter out;
+	private static final String SIM_COMPLETE_FLAG="SimulationComplete";
 	private static final String PROC_START=String.format(
-			"java -cp \"%s/dependencies/*\" RarsProc",
+			"java -cp \"%1$s/dependencies/RarsProc.jar;%1$s/dependencies/rars.jar\" RarsProc",
 			new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath()
 			);
 
@@ -43,23 +45,22 @@ class RarsProcManager {
 			this.out.write(message);
 			this.out.flush();
 			StringBuilder builder=new StringBuilder();
-			for (String line; (line=this.in.readLine())!=null; builder.append(line));
+			for (String line; 
+				(line=this.in.readLine())!=null && !line.equalsIgnoreCase(RarsProcManager.SIM_COMPLETE_FLAG);
+				builder.append(line));
 			rv=builder.toString();
 		} catch (IOException e){
 			Print.warning("An error occurred writing to a RARS process.");
 		}
 		return rv;
 	}
-	public String pipe(ArrayList<String> files, ArrayList<String> stdin, ArrayList<String> registers) {
-		return this.pipe(this.generateMessage(files,stdin,registers));
-	}
-
-	private String generateMessage(ArrayList<String> files, ArrayList<String> stdin, ArrayList<String> registers){
+	public String pipe(ArrayList<String> files, ArrayList<String> stdin, Set<String> registers) {
 		StringBuilder builder=new StringBuilder();
 		this.generateMessagePart(builder,files,"Files");
 		this.generateMessagePart(builder,stdin,"STDIN");
 		this.generateMessagePart(builder,registers,"Registers");
-		return builder.toString();
+		builder.append("end\n");
+		return this.pipe(builder.toString());
 	}
 
 	private void generateMessagePart(StringBuilder dest, ArrayList<String> vals, String desc){
@@ -68,6 +69,18 @@ class RarsProcManager {
 		dest.append("\n");
 		for (int i=0; i<vals.size(); i++){
 			dest.append(vals.get(i));
+			dest.append("\n");
+		}
+		dest.append("end");
+		dest.append(desc);
+		dest.append("\n");
+	}
+	private void generateMessagePart(StringBuilder dest, Set<String> vals, String desc){
+		dest.append("begin");
+		dest.append(desc);
+		dest.append("\n");
+		for (String iterVal: vals){
+			dest.append(iterVal);
 			dest.append("\n");
 		}
 		dest.append("end");
