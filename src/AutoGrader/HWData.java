@@ -79,7 +79,8 @@ public class HWData {
 			this.cleanedSubmissionsDir!=null &&
 			this.gradebook!=null &&
 			this.acceptedCodeFiles!=null &&
-			this.acceptedReadmeFiles!=null);
+			this.acceptedReadmeFiles!=null &&
+			this.numThreads!=null);
 	}
 
 	public boolean needsCleaning(){
