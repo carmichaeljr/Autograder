@@ -116,6 +116,7 @@
 				"points": "5",
 				"removeWhitespace": "true",
 				"outputConditional": "or",
+				"matchCase": "false",
 				"input": [
 				],
 				"output": [
