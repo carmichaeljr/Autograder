@@ -1,3 +1,5 @@
+package AutoGrader;
+
 public class Print {
 	private static final int LINE_LENGTH=120;
 	private static final int PROGRESS_BAR_LENGTH=50;

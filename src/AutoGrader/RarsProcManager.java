@@ -1,6 +1,7 @@
+package AutoGrader;
+
 import java.util.Set;
 import java.util.ArrayList;
-import java.io.File;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -8,21 +9,23 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.lang.StringBuilder;
 
+import Common.ProcessCommunication;
+
 //https://stackoverflow.com/questions/4112470/java-how-to-both-read-and-write-to-from-process-thru-pipe-stdin-stdout/4115082#4115082
 class RarsProcManager {
 	private Process proc;
 	private BufferedReader in;
 	private BufferedWriter out;
-	private static final String SIM_COMPLETE_FLAG="SimulationComplete";
-	private static final String PROC_START=String.format(
-			"java -cp \"%1$s/dependencies/RarsProc.jar;%1$s/dependencies/rars.jar\" RarsProc",
-			new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath()
-			);
+	//private static final String SIM_COMPLETE_FLAG="SimulationComplete";
+	//private static final String PROC_START=String.format(
+	//		"java -cp \"%1$s/dependencies/RarsProc.jar;%1$s/dependencies/rars.jar\" RarsProc.RarsProc",
+	//		new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath()
+	//		);
 
 
 	public RarsProcManager(){
 		try {
-			this.proc=Runtime.getRuntime().exec(RarsProcManager.PROC_START);
+			this.proc=Runtime.getRuntime().exec(ProcessCommunication.PROC_START);
 			this.in=new BufferedReader(new InputStreamReader(this.proc.getInputStream()));
 			this.out=new BufferedWriter(new OutputStreamWriter(this.proc.getOutputStream()));
 		} catch (IOException e) {
@@ -46,7 +49,7 @@ class RarsProcManager {
 			this.out.flush();
 			StringBuilder builder=new StringBuilder();
 			for (String line; 
-				(line=this.in.readLine())!=null && !line.equalsIgnoreCase(RarsProcManager.SIM_COMPLETE_FLAG);
+				(line=this.in.readLine())!=null && !line.equalsIgnoreCase(ProcessCommunication.SIM_COMPLETE);
 				builder.append(line));
 			rv=builder.toString();
 		} catch (IOException e){

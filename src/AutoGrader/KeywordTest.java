@@ -1,3 +1,5 @@
+package AutoGrader;
+
 import java.util.HashSet;
 import java.io.FileReader;
 import java.io.IOException;

@@ -1,3 +1,5 @@
+package AutoGrader;
+
 import java.util.HashSet;
 import java.util.ArrayList;
 import java.nio.file.Files;

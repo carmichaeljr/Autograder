@@ -1,3 +1,5 @@
+package AutoGrader;
+
 class Pair<T,U> {
 	private T key;
 	private U value;

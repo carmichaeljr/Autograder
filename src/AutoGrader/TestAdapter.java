@@ -1,3 +1,5 @@
+package AutoGrader;
+
 import java.io.IOException;
 
 import com.google.gson.Gson;

@@ -1,8 +1,12 @@
+package AutoGrader;
+
 import java.util.HashMap;
 import java.util.ArrayList;
 import java.lang.StringBuilder;
 
 import com.google.gson.annotations.SerializedName;
+
+import Common.ProcessCommunication;
 
 class ExecuteTest extends Test {
 	@SerializedName("removeWhitespace")
@@ -17,9 +21,9 @@ class ExecuteTest extends Test {
 	private ArrayList<String> outputs;
 	@SerializedName("regVals")
 	private HashMap<String,Integer> regVals;
-	private static final String ASSEMBLY_ERROR="Error: Assembly";
-	private static final String SIMULATION_ERROR="Error: Simulation";
-	private static final String INFINITE_LOOP="\nError: InfiniteLoop";
+	//private static final String ASSEMBLY_ERROR="Error: Assembly";
+	//private static final String SIMULATION_ERROR="Error: Simulation";
+	//private static final String INFINITE_LOOP="\nError: InfiniteLoop";
 	//TODO - move common strings for process talk to separate class
 
 	public ExecuteTest(float points, boolean removeWhiteSpace, String outputConditional){
@@ -51,11 +55,11 @@ class ExecuteTest extends Test {
 	}
 
 	private Pair<Float,String> checkForErrorCodes(String progOutput){
-		if (progOutput.contains(ExecuteTest.ASSEMBLY_ERROR)){
+		if (progOutput.contains(ProcessCommunication.ASSEMBLY_ERROR)){
 			return new Pair<Float,String>((float)0.0,"Code did not assemble.");
-		} else if (progOutput.contains(ExecuteTest.SIMULATION_ERROR)){
+		} else if (progOutput.contains(ProcessCommunication.SIMULATION_ERROR)){
 			return new Pair<Float,String>((float)0.0,"Code had an error during execution.");
-		} else if (progOutput.contains(ExecuteTest.INFINITE_LOOP)){
+		} else if (progOutput.contains(ProcessCommunication.INFINITE_LOOP)){
 			return new Pair<Float,String>((float)0.0,"Code had an infinite loop during execution.");
 		}
 		return null;

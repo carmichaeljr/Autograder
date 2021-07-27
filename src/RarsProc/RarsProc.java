@@ -1,5 +1,9 @@
+package RarsProc;
+
 import java.util.Scanner;
 import java.util.ArrayList;
+
+import Common.ProcessCommunication;
 
 import rars.ErrorList;
 import rars.api.Options;
@@ -14,10 +18,10 @@ public class RarsProc {
 	private String progOutput;
 	private ArrayList<String> inputs;
 	private static final int MAX_NUM_INSTRS=1000000;
-	private static final String ASSEMBLY_ERROR="Error: Assembly";
-	private static final String SIMULATION_ERROR="Error: Simulation";
-	private static final String INFINITE_LOOP="\nError: InfiniteLoop";
-	private static final String SIM_COMPLETE_PRINT="SimulationComplete";
+	//private static final String ASSEMBLY_ERROR="Error: Assembly";
+	//private static final String SIMULATION_ERROR="Error: Simulation";
+	//private static final String INFINITE_LOOP="\nError: InfiniteLoop";
+	//private static final String SIM_COMPLETE_PRINT="SimulationComplete";
 	private static final RarsProc inst=new RarsProc();
 
 	public static void start(){
@@ -73,7 +77,7 @@ public class RarsProc {
 		try {
 			this.prog.assemble(files,files.get(0));
 		} catch (AssemblyException e){
-			this.progOutput=RarsProc.ASSEMBLY_ERROR;
+			this.progOutput=ProcessCommunication.ASSEMBLY_ERROR;
 			rv=false;
 		}
 		return rv;
@@ -84,11 +88,11 @@ public class RarsProc {
 		try {
 			reason=this.prog.simulate();
 		} catch (SimulationException e){
-			this.progOutput=RarsProc.SIMULATION_ERROR;
+			this.progOutput=ProcessCommunication.SIMULATION_ERROR;
 		}
 		this.progOutput=this.prog.getSTDOUT();
 		if (reason!=null && reason==Simulator.Reason.MAX_STEPS){
-			this.progOutput+=RarsProc.INFINITE_LOOP;
+			this.progOutput+=ProcessCommunication.INFINITE_LOOP;
 		}
 	}
 
@@ -98,7 +102,7 @@ public class RarsProc {
 	}
 
 	private void printDone(){
-		System.out.println(RarsProc.SIM_COMPLETE_PRINT);
+		System.out.println(ProcessCommunication.SIM_COMPLETE);
 	}
 
 	private void printRegisters(){

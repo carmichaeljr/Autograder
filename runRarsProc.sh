@@ -1,2 +1,2 @@
 #!/bin/bash
-java -cp ".;dependencies/RarsProc.jar;dependencies/rars.jar" RarsProc
+java -cp ".;dependencies/RarsProc.jar;dependencies/rars.jar" RarsProc.RarsProc
