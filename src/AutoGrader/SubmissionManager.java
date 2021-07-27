@@ -127,10 +127,12 @@ public class SubmissionManager {
 			for (int i=0; i<fh.size(); i++){
 				String path=fh.get(i).getFileName();
 				String ext=this.getFileExtension(path);
-				//TODO - Check that the path does not contain the grading script
-				if (ext.length()>0 && !path.contains("MACOS") &&
-				    (Settings.getHWData().getAcceptedCodeFiles().contains(ext) ||
-				     Settings.getHWData().getAcceptedReadmeFiles().contains(ext))){
+				boolean fileFound=(ext.length()>0);
+				fileFound&=(Settings.getHWData().getGradingScript()!=null)?
+					!path.contains(Settings.getHWData().getGradingScript()): true;
+				fileFound&=(Settings.getHWData().getAcceptedCodeFiles().contains(ext) ||
+				     	Settings.getHWData().getAcceptedReadmeFiles().contains(ext));
+				if (fileFound){
 					String name=Paths.get(path).getFileName().toString();
 					zf.extractFile(path,fullSubDir,name);
 				}
