@@ -8,8 +8,8 @@ import java.nio.file.Paths;
 import com.google.gson.annotations.SerializedName;
 
 public class HWData {
-	@SerializedName("hwName")
-	private String hwName;
+	@SerializedName("gradingScript")
+	private String gradingScript;
 	@SerializedName("zippedSubmissions")
 	private String zippedSubmissions;
 	@SerializedName("cleanedSubmissionsDir")
@@ -26,14 +26,16 @@ public class HWData {
 	private ArrayList<String> acceptedReadmeFiles;
 	
 	public HWData(String hwName, String zippedSubmissions, String cleanedSubmissionsDir, String gradebook){
-		this.hwName=hwName;
 		this.zippedSubmissions=zippedSubmissions;
 		this.cleanedSubmissionsDir=cleanedSubmissionsDir;
 		this.gradebook=gradebook;
 	}
 
-	public String getHWName(){
-		return this.hwName;
+	public String getGradingScript(){
+		if (this.gradingScript.length()==0){
+			return null;
+		}
+		return this.gradingScript;
 	}
 	public String getZippedSubmissions(){
 		return this.zippedSubmissions;
@@ -63,6 +65,9 @@ public class HWData {
 		if (this.zippedSubmissions!=null){
 			inputsOk&=Files.exists(Paths.get(this.zippedSubmissions));
 		}
+		if (this.gradingScript!=null && this.gradingScript.length()>0){
+			inputsOk&=Files.exists(Paths.get(this.gradingScript));
+		}
 		if (!inputsOk){
 			throw new AutoGraderException(
 				"The HWData file is incorrectly formatted or the submissions file DNE.");
@@ -75,7 +80,6 @@ public class HWData {
 			this.gradebook!=null &&
 			this.acceptedCodeFiles!=null &&
 			this.acceptedReadmeFiles!=null);
-
 	}
 
 	public boolean needsCleaning(){

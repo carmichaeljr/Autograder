@@ -4,7 +4,7 @@ public class AutoGrader {
 	public static void main(String[] args){
 		try {
 			Settings.load(args);
-			//Gradebook.load();
+			Gradebook.load();
 			SubmissionManager.load();
 			TestRunner.load();
 			TestRunner.run();

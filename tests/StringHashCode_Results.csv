@@ -1,0 +1,15 @@
+BrokenCodeStudent,20.0,"Code did not assemble.
+"
+PerfectStudent,25.0,""
+NoPseudoCodeStudent,20.0,"Pseudo code in README was not sufficient
+"
+OnlyREADMEStudent,15.0,"Not enough comment coverage
+Program did not output 56568 given inputs of hello, and \n.
+"
+NotEnoughCommentsStudent,20.0,"Not enough comment coverage
+"
+NoSubmissionStudent,5.0,"Not enough comment coverage
+Program did not output 56568 given inputs of hello, and \n.
+Pseudo code in README was not sufficient
+README was not sufficient.
+"

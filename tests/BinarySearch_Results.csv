@@ -1,0 +1,20 @@
+NoCodeStudent,15.0,"Not enough comment coverage
+Program did not output Summation:55, Summation:10, Summation:3, Index:2, and Value:3 given inputs of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, and 3.
+"
+NoREADMEStudent,13.0,"Pseudo instructions are not allowed
+Pseudo code in README was not sufficient
+README was not sufficient.
+"
+PerfectStudent,23.0,"Pseudo instructions are not allowed
+"
+NoPseudoCodeStudent,13.0,"Pseudo instructions are not allowed
+Pseudo code in README was not sufficient
+README was not sufficient.
+"
+SubmitGraderScriptStudent,23.0,"Pseudo instructions are not allowed
+"
+NoSubmissionStudent,5.0,"Not enough comment coverage
+Program did not output Summation:55, Summation:10, Summation:3, Index:2, and Value:3 given inputs of 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 0, and 3.
+Pseudo code in README was not sufficient
+README was not sufficient.
+"

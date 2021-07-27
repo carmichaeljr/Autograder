@@ -127,6 +127,7 @@ public class SubmissionManager {
 			for (int i=0; i<fh.size(); i++){
 				String path=fh.get(i).getFileName();
 				String ext=this.getFileExtension(path);
+				//TODO - Check that the path does not contain the grading script
 				if (ext.length()>0 && !path.contains("MACOS") &&
 				    (Settings.getHWData().getAcceptedCodeFiles().contains(ext) ||
 				     Settings.getHWData().getAcceptedReadmeFiles().contains(ext))){
@@ -134,7 +135,6 @@ public class SubmissionManager {
 					zf.extractFile(path,fullSubDir,name);
 				}
 			}
-			//System.out.println("Creating "+submission+" folder");
 			return true;
 		} catch (IOException e){
 			Print.warning(String.format("An error occurred extracting submission files from the submission %s.",submission));

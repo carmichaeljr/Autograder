@@ -42,10 +42,11 @@ class ExecuteTest extends Test {
 		String rv="";
 		if (submissionFile!=null){
 			ArrayList<String> files=new ArrayList<String>();
-			//TODO - check for grading script file
+			if (Settings.getHWData().getGradingScript()!=null){
+				files.add(Settings.getHWData().getGradingScript());
+			}
 			files.add(submissionFile);
 			rv=rarsProcRef.pipe(files,this.inputs,this.regVals.keySet());
-			//System.out.println(rv);
 		}
 		return rv;
 	}
@@ -62,11 +63,12 @@ class ExecuteTest extends Test {
 	}
 
 	private Pair<Float,String> checkForOutputs(String progOutput){
+		//TODO - implement register checking
 		if (this.removeWhiteSpace){	
-			progOutput.replaceAll("\\s+","");
+			progOutput=progOutput.replaceAll("\\s+","");
 		}
-		if (this.matchCase){
-			progOutput.toLowerCase();
+		if (!this.matchCase){
+			progOutput=progOutput.toLowerCase();
 		}
 		boolean someOutputs=this.outputConditional.equalsIgnoreCase("or");
 		boolean result=!someOutputs;
@@ -74,7 +76,7 @@ class ExecuteTest extends Test {
 			String expected=(this.matchCase)? this.outputs.get(i): this.outputs.get(i).toLowerCase();
 			boolean iterResult=(someOutputs)? progOutput.contains(expected): !progOutput.contains(expected);
 			if (iterResult){
-				result=(someOutputs)? (iterResult && true): (iterResult && false);
+				result=(someOutputs)? (iterResult || true): (iterResult && false);
 			}
 		}
 		if (result){

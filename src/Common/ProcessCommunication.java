@@ -9,7 +9,6 @@ public class ProcessCommunication {
 	public static final String SIM_COMPLETE="SimulationComplete";
 	public static final String PROC_START=String.format(
 			"java -cp \"%1$s/dependencies/RarsProc.jar;%1$s/dependencies/rars.jar\" RarsProc.RarsProc",
-			new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath()
-			);
+			new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath());
 
 }

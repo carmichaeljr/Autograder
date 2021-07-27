@@ -1,8 +1,8 @@
 {
-	"gradingScript": "",
-	"zippedSubmissions": "tests/StringHashCode.zip",
+	"gradingScript": "tests/BinarySearch_GraderScript.asm",
+	"zippedSubmissions": "tests/BinarySearch.zip",
 	"cleanedSubmissionsDir": "TEMP",
-	"gradebook": "tests/StringHashCode_Results.csv",
+	"gradebook": "tests/BinarySearch_Results.csv",
 	"numThreads": "2",
 	"students": [
 		"notInSubmissionStudent"

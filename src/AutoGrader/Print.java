@@ -36,6 +36,6 @@ public class Print {
 		for (int i=0; i<numChars; System.out.print(_char), i++);
 	}
 	private static void fillLine(int numChars){
-		Print.fillLineWith(numChars, '.');
+		Print.fillLineWith(numChars, ' ');
 	}
 }
