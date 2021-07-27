@@ -6,6 +6,7 @@ import java.lang.InterruptedException;
 import java.util.concurrent.CountDownLatch;
 
 class TestRunner {
+	private int progress;
 	private CountDownLatch latch;
 	private HashSet<String> studentsToGrade;
 	private ArrayList<HashSet<String>> threadStudentBreakup;
@@ -19,6 +20,7 @@ class TestRunner {
 
 	public static void run() throws AutoGraderException {
 		try {
+			TestRunner.inst.progress=0;
 			TestRunner.inst.createTestSuiteRunners();
 			TestRunner.inst.start();
 			TestRunner.inst.latch.await();
@@ -27,19 +29,31 @@ class TestRunner {
 		}
 	}
 
+	public static synchronized void incrementProgresBar(){
+		TestRunner.inst.progress++;
+		Print.progressBar(TestRunner.inst.progress,TestRunner.inst.studentsToGrade.size(),"");
+	}
+
 	private TestRunner(){
+		this.progress=0;
 		this.studentsToGrade=new HashSet<String>();
 		this.threadStudentBreakup=new ArrayList<HashSet<String>>();
 		this.testSuiteRunners=new ArrayList<TestSuiteRunner>();
 	}
 
 	private void setStudentsToGrade(){
-		this.studentsToGrade=Settings.getHWData().getStudents();
+		HashSet<String> availableStudents=SubmissionManager.getStudents();
+		for (String student: Settings.getHWData().getStudents()){
+			if (availableStudents.contains(student)){
+				this.studentsToGrade.add(student);
+			} else {
+				Print.warning(String.format("The student '%s' was not found in the submissions folder.",student));
+			}
+		}
 		if (this.studentsToGrade==null ||
 		    (this.studentsToGrade!=null && this.studentsToGrade.size()==0)){
 			this.studentsToGrade=SubmissionManager.getStudents();
 		}
-		//TODO- filter out students not in submission list
 		//System.out.println(this.studentsToGrade.toString());
 	}
 

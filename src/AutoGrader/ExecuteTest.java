@@ -21,10 +21,6 @@ class ExecuteTest extends Test {
 	private ArrayList<String> outputs;
 	@SerializedName("regVals")
 	private HashMap<String,Integer> regVals;
-	//private static final String ASSEMBLY_ERROR="Error: Assembly";
-	//private static final String SIMULATION_ERROR="Error: Simulation";
-	//private static final String INFINITE_LOOP="\nError: InfiniteLoop";
-	//TODO - move common strings for process talk to separate class
 
 	public ExecuteTest(float points, boolean removeWhiteSpace, String outputConditional){
 		super(points,"");

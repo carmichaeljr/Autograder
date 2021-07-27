@@ -11,17 +11,10 @@ import java.lang.StringBuilder;
 
 import Common.ProcessCommunication;
 
-//https://stackoverflow.com/questions/4112470/java-how-to-both-read-and-write-to-from-process-thru-pipe-stdin-stdout/4115082#4115082
 class RarsProcManager {
 	private Process proc;
 	private BufferedReader in;
 	private BufferedWriter out;
-	//private static final String SIM_COMPLETE_FLAG="SimulationComplete";
-	//private static final String PROC_START=String.format(
-	//		"java -cp \"%1$s/dependencies/RarsProc.jar;%1$s/dependencies/rars.jar\" RarsProc.RarsProc",
-	//		new File(ClassLoader.getSystemClassLoader().getResource(".").getPath()).getAbsolutePath()
-	//		);
-
 
 	public RarsProcManager(){
 		try {

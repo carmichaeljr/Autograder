@@ -18,10 +18,6 @@ public class RarsProc {
 	private String progOutput;
 	private ArrayList<String> inputs;
 	private static final int MAX_NUM_INSTRS=1000000;
-	//private static final String ASSEMBLY_ERROR="Error: Assembly";
-	//private static final String SIMULATION_ERROR="Error: Simulation";
-	//private static final String INFINITE_LOOP="\nError: InfiniteLoop";
-	//private static final String SIM_COMPLETE_PRINT="SimulationComplete";
 	private static final RarsProc inst=new RarsProc();
 
 	public static void start(){

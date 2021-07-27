@@ -5,6 +5,7 @@
 	"gradebook": "tests/StringHashCode_Results.csv",
 	"numThreads": "2",
 	"students": [
+		"notInSubmissionStudent"
 	],
 	"acceptedCodeFiles": [
 		"s",

@@ -174,21 +174,23 @@ public class SubmissionManager {
 	private void deleteDirectory(String dir){
 		try {
 			Path path = Paths.get(dir);
-			Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
-				@Override
-				public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-					Files.delete(file);
-					return FileVisitResult.CONTINUE;
-				}
-				
-				@Override
-				public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
-					Files.delete(dir);
-					return FileVisitResult.CONTINUE;
-				}
-			});
+			if (Files.exists(path)){
+				Files.walkFileTree(path, new SimpleFileVisitor<Path>() {
+					@Override
+					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
+						Files.delete(file);
+						return FileVisitResult.CONTINUE;
+					}
+					
+					@Override
+					public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+						Files.delete(dir);
+						return FileVisitResult.CONTINUE;
+					}
+				});
+			}
 		} catch (IOException e){
-			Print.warning("The temporary cleaned submissions directory was unable to be deleted.");
+			Print.warning(String.format("The directory '%s' was unable to be deleted.",dir));
 		}
 	}
 
