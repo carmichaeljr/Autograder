@@ -80,7 +80,7 @@ public class HWData {
 			this.gradebook!=null &&
 			this.acceptedCodeFiles!=null &&
 			this.acceptedReadmeFiles!=null &&
-			this.numThreads!=null);
+			this.numThreads!=0);
 	}
 
 	public boolean needsCleaning(){

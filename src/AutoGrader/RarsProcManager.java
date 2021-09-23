@@ -35,22 +35,24 @@ class RarsProcManager {
 		}
 	}
 
-	public String pipe(String message){
+	public String pipe(String message) throws AutoGraderException {
 		String rv=null;
 		try {
 			this.out.write(message);
 			this.out.flush();
+			//Print.line(message);
 			StringBuilder builder=new StringBuilder();
 			for (String line; 
 				(line=this.in.readLine())!=null && !line.equalsIgnoreCase(ProcessCommunication.SIM_COMPLETE);
 				builder.append(line));
 			rv=builder.toString();
 		} catch (IOException e){
-			Print.warning("An error occurred writing to a RARS process.");
+			Print.warning("An error occurred writing to a RARS process, a student's code may have improper IO.");
+			throw new AutoGraderException("An error occurred writing to a RARS process, a student's code may have improper IO.");
 		}
 		return rv;
 	}
-	public String pipe(ArrayList<String> files, ArrayList<String> stdin, Set<String> registers) {
+	public String pipe(ArrayList<String> files, ArrayList<String> stdin, Set<String> registers) throws AutoGraderException {
 		StringBuilder builder=new StringBuilder();
 		this.generateMessagePart(builder,files,"Files");
 		this.generateMessagePart(builder,stdin,"STDIN");
@@ -90,7 +92,7 @@ class RarsProcManager {
 			this.in.close();
 			this.out.close();
 		} catch (IOException e){
-			System.out.println(e);
+			//System.out.println(e);
 		}
 		this.proc.destroy();
 	}

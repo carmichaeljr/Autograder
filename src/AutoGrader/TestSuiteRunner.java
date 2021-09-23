@@ -37,10 +37,18 @@ class TestSuiteRunner implements Runnable {
 	}
 
 	public void runTestsOnStudent(String student){
+		//Print.line(String.format("Student: %s========================================",student));
 		float studentScore=0;
 		ArrayList<String> comments=new ArrayList<String>();
 		for (int k=0; k<this.tests.size(); k++){
-			Pair<Float,String> result=this.tests.get(k).run(this.proc,student);
+			Pair<Float,String> result=null;
+			try {
+				result=this.tests.get(k).run(this.proc,student);
+			} catch (AutoGraderException e){
+				result=new Pair<Float,String>((float)0.0,"An error occurred running tests.");
+				this.proc.destroy();
+				this.proc=new RarsProcManager();
+			}
 			studentScore+=result.getKey();
 			if (result.getValue()!=null && result.getValue().length()>0){
 				comments.add(result.getValue());

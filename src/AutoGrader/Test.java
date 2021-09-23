@@ -43,5 +43,5 @@ abstract class Test {
 		return null;
 	}
 
-	abstract public Pair<Float,String> run(RarsProcManager rarsProcRef, String student);
+	abstract public Pair<Float,String> run(RarsProcManager rarsProcRef, String student) throws AutoGraderException;
 }

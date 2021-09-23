@@ -26,7 +26,7 @@ class CommentTest extends Test {
 	}
 
 	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student){
+	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student) throws AutoGraderException{
 		try {
 			float percentage=this.getCommentPercentage(super.getTestFile(student));
 			return (percentage>=this.percentage)? new Pair<Float,String>(super.points,""):

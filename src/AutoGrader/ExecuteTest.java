@@ -31,14 +31,20 @@ class ExecuteTest extends Test {
 	}
 
 	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student){
+	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student) throws AutoGraderException {
 		String progOutput=this.runProgram(rarsProcRef,super.getTestFile(student));
-		Pair<Float,String> rv=this.checkForErrorCodes(progOutput);
-		rv=(rv==null)? this.checkForOutputs(progOutput): rv;
-		return rv;
+		if (progOutput!=null){
+			//Print.line("PROG OUTPUT: "+progOutput);
+			Pair<Float,String> rv=this.checkForErrorCodes(progOutput);
+			rv=(rv==null)? this.checkForOutputs(progOutput): rv;
+			return rv;
+		} else {
+			//Print.line("No output");
+			return new Pair<Float,String>((float)0.0,"Code did not have any output.");
+		}
 	}
 
-	private String runProgram(RarsProcManager rarsProcRef, String submissionFile){
+	private String runProgram(RarsProcManager rarsProcRef, String submissionFile) throws AutoGraderException {
 		String rv="";
 		if (submissionFile!=null){
 			ArrayList<String> files=new ArrayList<String>();
@@ -46,6 +52,7 @@ class ExecuteTest extends Test {
 				files.add(Settings.getHWData().getGradingScript());
 			}
 			files.add(submissionFile);
+			//System.out.println(String.format("Submission file: %s",submissionFile));
 			rv=rarsProcRef.pipe(files,this.inputs,this.regVals.keySet());
 		}
 		return rv;

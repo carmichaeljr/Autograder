@@ -1,7 +1,10 @@
 package AutoGrader;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+//import java.nio.file.Files;
+//import java.nio.file.Paths;
+//import java.nio.charset.Charset;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
 
 import com.google.gson.annotations.SerializedName;
@@ -16,7 +19,7 @@ class LengthTest extends Test {
 	}
 
 	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student){
+	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student) throws AutoGraderException{
 		try {
 			long lines=this.countLines(super.getTestFile(student));
 			return (lines>=this.minLines)? new Pair<Float,String>(super.points,""):
@@ -29,7 +32,11 @@ class LengthTest extends Test {
 	private long countLines(String file) throws IOException {
 		long rv=-1;
 		if (file!=null){
-			rv=Files.lines(Paths.get(file)).count();
+			rv=0;
+			BufferedReader reader=new BufferedReader(new FileReader(file));
+			while (reader.readLine()!=null) rv++;
+			reader.close();
+			//rv=Files.lines(Paths.get(file),Charset.forName("Cp1252")).count();
 		}
 		return rv;
 	}

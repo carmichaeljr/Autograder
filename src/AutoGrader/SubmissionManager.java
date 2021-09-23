@@ -37,7 +37,9 @@ public class SubmissionManager {
 	public static String getCodeFile(String student){
 		if (SubmissionManager.inst.submissions.contains(student)){
 			String temp=String.format("%s/%s",Settings.getHWData().getCleanedSubmissionsDir(),student);
-			return SubmissionManager.inst.getFileByPrecidence(Settings.getHWData().getAcceptedCodeFiles(),temp);
+			String codeFile=SubmissionManager.inst.getFileByPrecidence(Settings.getHWData().getAcceptedCodeFiles(),temp);
+			//System.out.println(String.format("CODE FILE: %s",codeFile));
+			return codeFile;
 		}
 		return null;
 	}
@@ -101,7 +103,7 @@ public class SubmissionManager {
 		try {
 			Files.createDirectories(Paths.get(Settings.getHWData().getCleanedSubmissionsDir()));
 		} catch (IOException e){
-			throw new AutoGraderException("An error occured creating the temp submissions directory.");
+			throw new AutoGraderException("An error occurred creating the temp submissions directory.");
 		}
 	}
 
@@ -152,7 +154,7 @@ public class SubmissionManager {
 			FilenameFilter filter=new FilenameFilter(){
 				@Override
 				public boolean accept(File dir, String name){
-					return name.endsWith(String.format(".%s",iterType));
+					return (!name.startsWith("._") && name.endsWith(String.format(".%s",iterType)));
 				}
 			};
 			File[] files=folder.listFiles(filter);

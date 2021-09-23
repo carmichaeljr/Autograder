@@ -25,7 +25,7 @@ class KeywordTest extends Test {
 	}
 
 	@Override
-	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student){
+	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student) throws AutoGraderException{
 		try {
 			return this.awardPoints(this.getNumOccurances(super.getTestFile(student)));
 		} catch (IOException e){
