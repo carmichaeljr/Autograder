@@ -134,6 +134,7 @@ public class SubmissionManager {
 					!path.contains(Settings.getHWData().getGradingScript()): true;
 				fileFound&=(Settings.getHWData().getAcceptedCodeFiles().contains(ext) ||
 				     	Settings.getHWData().getAcceptedReadmeFiles().contains(ext));
+				fileFound&=(!path.contains("._") && !path.contains("MAC"));
 				if (fileFound){
 					String name=Paths.get(path).getFileName().toString();
 					zf.extractFile(path,fullSubDir,name);
@@ -154,7 +155,7 @@ public class SubmissionManager {
 			FilenameFilter filter=new FilenameFilter(){
 				@Override
 				public boolean accept(File dir, String name){
-					return (!name.startsWith("._") && name.endsWith(String.format(".%s",iterType)));
+					return (name.endsWith(String.format(".%s",iterType)));
 				}
 			};
 			File[] files=folder.listFiles(filter);
