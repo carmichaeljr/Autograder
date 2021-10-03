@@ -32,7 +32,7 @@ class ExecuteTest extends Test {
 
 	@Override
 	public Pair<Float,String> run(RarsProcManager rarsProcRef, String student) throws AutoGraderException {
-		String progOutput=this.runProgram(rarsProcRef,super.getTestFile(student));
+		String progOutput=this.runProgram(rarsProcRef,super.getTestFiles(student));
 		if (progOutput!=null){
 			//Print.line("PROG OUTPUT: "+progOutput);
 			Pair<Float,String> rv=this.checkForErrorCodes(progOutput);
@@ -44,14 +44,16 @@ class ExecuteTest extends Test {
 		}
 	}
 
-	private String runProgram(RarsProcManager rarsProcRef, String submissionFile) throws AutoGraderException {
+	private String runProgram(RarsProcManager rarsProcRef, ArrayList<String> submissionFiles) throws AutoGraderException {
 		String rv="";
-		if (submissionFile!=null){
+		if (submissionFiles!=null && submissionFiles.size()>0){
 			ArrayList<String> files=new ArrayList<String>();
 			if (Settings.getHWData().getGradingScript()!=null){
 				files.add(Settings.getHWData().getGradingScript());
 			}
-			files.add(submissionFile);
+			for (int i=0; i<submissionFiles.size(); i++){
+				files.add(submissionFiles.get(i));
+			}
 			//System.out.println(String.format("Submission file: %s",submissionFile));
 			rv=rarsProcRef.pipe(files,this.inputs,this.regVals.keySet());
 		}

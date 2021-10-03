@@ -1,5 +1,7 @@
 package AutoGrader;
 
+import java.util.ArrayList;
+
 import com.google.gson.annotations.SerializedName;
 
 abstract class Test {
@@ -36,11 +38,27 @@ abstract class Test {
 
 	protected String getTestFile(String student){
 		if (this.applyTo.equalsIgnoreCase("code") || this.applyTo.equalsIgnoreCase("assembly")){
+			ArrayList<String> temp=SubmissionManager.getCodeFile(student);
+			if (temp.size()>0){
+				return temp.get(0);
+			}
+		} else if (this.applyTo.equalsIgnoreCase("readme")){
+			ArrayList<String> temp=SubmissionManager.getReadmeFile(student);
+			if (temp.size()>0){
+				return temp.get(0);
+			}
+		}
+		return null;
+	}
+
+	protected ArrayList<String> getTestFiles(String student){
+		if (this.applyTo.equalsIgnoreCase("code") || this.applyTo.equalsIgnoreCase("assembly")){
 			return SubmissionManager.getCodeFile(student);
 		} else if (this.applyTo.equalsIgnoreCase("readme")){
 			return SubmissionManager.getReadmeFile(student);
 		}
 		return null;
+
 	}
 
 	abstract public Pair<Float,String> run(RarsProcManager rarsProcRef, String student) throws AutoGraderException;

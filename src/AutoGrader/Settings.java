@@ -65,18 +65,6 @@ public class Settings {
 		} catch (IOException e){
 			throw new AutoGraderException("The given code settings file is non-existent.");
 		}
-
-		//java.lang.reflect.Type listType=new com.google.gson.reflect.TypeToken<ArrayList<Test>>() {}.getType();
-		//JsonArray jsonList=(JsonArray)(gson.fromJson(jsonStr,JsonObject.class).get("tests"));
-		//System.out.println(jsonList.toString());
-		//ArrayList<Test> itemList=gson.fromJson(jsonList,listType);
-
-		//for (Test item: itemList){
-		//	System.out.println(item.getPoints());
-		//	System.out.println(item.getComment());
-		//}
-
-		//return new TestSuite(itemList);
 	}
 }
 

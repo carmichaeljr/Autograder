@@ -34,17 +34,15 @@ public class SubmissionManager {
 		return rv;
 	}
 
-	public static String getCodeFile(String student){
+	public static ArrayList<String> getCodeFile(String student){
 		if (SubmissionManager.inst.submissions.contains(student)){
 			String temp=String.format("%s/%s",Settings.getHWData().getCleanedSubmissionsDir(),student);
-			String codeFile=SubmissionManager.inst.getFileByPrecidence(Settings.getHWData().getAcceptedCodeFiles(),temp);
-			//System.out.println(String.format("CODE FILE: %s",codeFile));
-			return codeFile;
+			return SubmissionManager.inst.getFileByPrecidence(Settings.getHWData().getAcceptedCodeFiles(),temp);
 		}
 		return null;
 	}
 
-	public static String getReadmeFile(String student){
+	public static ArrayList<String> getReadmeFile(String student){
 		if (SubmissionManager.inst.submissions.contains(student)){
 			String temp=String.format("%s/%s",Settings.getHWData().getCleanedSubmissionsDir(),student);
 			return SubmissionManager.inst.getFileByPrecidence(Settings.getHWData().getAcceptedReadmeFiles(),temp);
@@ -53,7 +51,7 @@ public class SubmissionManager {
 	}
 
 	public static void cleanUpAfterGrading(String student){
-		SubmissionManager.inst.deleteFromTempDir(student);
+		//SubmissionManager.inst.deleteFromTempDir(student);
 	}
 
 	public static HashSet<String> getStudents(){
@@ -61,7 +59,7 @@ public class SubmissionManager {
 	}
 
 	public static void cleanUp(){
-		SubmissionManager.inst.deleteDirectory(Settings.getHWData().getCleanedSubmissionsDir());
+		//SubmissionManager.inst.deleteDirectory(Settings.getHWData().getCleanedSubmissionsDir());
 	}
 
 	private SubmissionManager(){
@@ -147,20 +145,21 @@ public class SubmissionManager {
 		}
 	}
 
-	private String getFileByPrecidence(ArrayList<String> typePrecidence, String dir){
-		String rv=null;
+	private ArrayList<String> getFileByPrecidence(ArrayList<String> typePrecidence, String dir){
+		ArrayList<String> rv=new ArrayList<String>();
 		File folder=new File(dir);
-		for (int i=0; i<typePrecidence.size() && rv==null; i++){
+		for (int i=0; i<typePrecidence.size(); i++){
 			final String iterType=typePrecidence.get(i);
 			FilenameFilter filter=new FilenameFilter(){
 				@Override
 				public boolean accept(File dir, String name){
-					return (name.endsWith(String.format(".%s",iterType)));
+					return (name.endsWith(String.format(".%s",iterType)) &&
+						!name.equalsIgnoreCase(Settings.getHWData().getGradingScript()));
 				}
 			};
 			File[] files=folder.listFiles(filter);
-			if (files!=null && files.length>0){
-				rv=files[0].getAbsolutePath();
+			for (int j=0; files!=null && j<files.length; j++){
+				rv.add(files[j].getAbsolutePath());
 			}
 		}
 		return rv;
