@@ -30,7 +30,7 @@ public class SubmissionManager {
 	public static boolean prepareForGrading(String student){
 		boolean rv=SubmissionManager.inst.submissions.contains(student);
 		rv&=(rv)? SubmissionManager.inst.moveToTempDir(student): rv;
-		rv&=(rv)? SubmissionManager.inst.extractFiles(student): rv;
+		//rv&=(rv)? SubmissionManager.inst.extractFiles(student): rv;
 		return rv;
 	}
 
@@ -72,11 +72,21 @@ public class SubmissionManager {
 			List<FileHeader> fileHeaders=zf.getFileHeaders();
 			for (int i=0; i<fileHeaders.size(); i++){
 				String name=fileHeaders.get(i).getFileName();
-				int index=name.indexOf('_');
-				if (index>0){
-					zf.renameFile(name,String.format("%s.zip",name.substring(0,index)));
+				int uIndex=name.indexOf('_');
+				boolean isZip=(name.indexOf(".zip")>=0);
+				if (uIndex>0 && isZip){
+					zf.renameFile(name,String.format("%s.zip",name.substring(0,uIndex)));
+				} else if (uIndex>0 && !isZip){
+					String extension=this.getFileExtension(name);
+					zf.renameFile(
+						name,
+						String.format(
+							"%s.%s",
+							name.substring(0,uIndex),
+							extension
+						)
+					);
 				}
-				//System.out.println(name+" "+String.format("%s.zip",name.substring(0,index)));
 			}
 		} catch (ZipException e){
 			throw new AutoGraderException("An error occurred renaming students submissions.");
@@ -91,7 +101,6 @@ public class SubmissionManager {
 				int index=name.indexOf('.');
 				this.submissions.add(name.substring(0,index));
 			}
-			//System.out.println(this.submissions.toString());
 		} catch (ZipException e){
 			throw new AutoGraderException("An error occurred opening the submission file.");
 		}
@@ -110,10 +119,30 @@ public class SubmissionManager {
 			String fullSubName=String.format("%s.zip",submission);
 			new ZipFile(Settings.getHWData().getZippedSubmissions()).
 				extractFile(fullSubName,Settings.getHWData().getCleanedSubmissionsDir());
+			this.extractFiles(submission);
 			return true;
 		} catch (ZipException e){
-			System.out.print(e);
-			Print.warning(String.format("An error occurred extracting submission %s from the submissions file.",submission));
+			Print.warning(String.format("An error occurred extracting submission %s from the submissions file, attempting to move single file.",submission));
+			return this.moveSingleFileToTempDir(submission);
+		}
+	}
+
+	private boolean moveSingleFileToTempDir(String submission){
+		try {
+			List<FileHeader> fileHeaders=new ZipFile(Settings.getHWData().getZippedSubmissions()).getFileHeaders();
+			for (int i=0; i<fileHeaders.size(); i++){
+				String name=fileHeaders.get(i).getFileName();
+				String nameWithoutExtenstion=name.substring(0,name.indexOf('.'));
+				if (submission.equalsIgnoreCase(nameWithoutExtenstion)){
+					new ZipFile(Settings.getHWData().getZippedSubmissions()).extractFile(
+						name,
+						String.format("%s/%s",Settings.getHWData().getCleanedSubmissionsDir(),submission)
+					);
+				}
+			}
+			return true;
+		} catch (ZipException e){
+			Print.warning(String.format("An error occurred attempting to move single file submission %s from the submissions file.",submission));
 			return false;
 		}
 	}
@@ -134,6 +163,7 @@ public class SubmissionManager {
 				     	Settings.getHWData().getAcceptedReadmeFiles().contains(ext));
 				fileFound&=(!path.contains("._") && !path.contains("MAC"));
 				if (fileFound){
+					//System.out.println("File found???");
 					String name=Paths.get(path).getFileName().toString();
 					zf.extractFile(path,fullSubDir,name);
 				}

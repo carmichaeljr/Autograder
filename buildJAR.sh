@@ -1,6 +1,6 @@
 #!/bin/bash
 echo "Compiling RarsProc..."
-javac -cp ".;dependencies/*" src/RarsProc/*.java src/Common/*.java -d build
+javac -cp ".;dependencies/gson-2.8.7.jar;dependencies/rars.jar;dependencies/zip4j-2.8.0.jar" src/RarsProc/*.java src/Common/*.java -d build
 #java -cp ".;build/;dependencies/*" RarsProc
 if [[ $? -eq 0 ]]
 then

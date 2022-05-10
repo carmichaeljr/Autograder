@@ -54,7 +54,10 @@ class ExecuteTest extends Test {
 			for (int i=0; i<submissionFiles.size(); i++){
 				files.add(submissionFiles.get(i));
 			}
-			//System.out.println(String.format("Submission file: %s",submissionFile));
+			//System.out.println("Submission Files: ");
+			//for (int i=0; i<files.size(); i++){
+			//	System.out.println(files.get(i));
+			//}
 			rv=rarsProcRef.pipe(files,this.inputs,this.regVals.keySet());
 		}
 		return rv;

@@ -60,7 +60,6 @@ class TestSuiteRunner implements Runnable {
 	}
 
 	public void start(){
-		//System.out.println("Starting: "+this.thread.getName());
 		this.thread.start();
 	}
 }

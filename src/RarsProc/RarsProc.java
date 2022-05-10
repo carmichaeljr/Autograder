@@ -41,7 +41,7 @@ public class RarsProc {
 		this.opts=new Options();
 		this.opts.pseudo=true;
 		this.opts.warningsAreErrors=false;
-		this.opts.startAtMain=false;
+		this.opts.startAtMain=true;
 		this.opts.selfModifyingCode=false;
 		this.opts.maxSteps=RarsProc.MAX_NUM_INSTRS;
 		this.prog=new Program(this.opts);

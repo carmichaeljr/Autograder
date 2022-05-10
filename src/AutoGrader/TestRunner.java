@@ -54,7 +54,6 @@ class TestRunner {
 		    (this.studentsToGrade!=null && this.studentsToGrade.size()==0)){
 			this.studentsToGrade=SubmissionManager.getStudents();
 		}
-		//System.out.println(this.studentsToGrade.toString());
 	}
 
 	private void setThreadStudentBreakup(){
@@ -67,8 +66,6 @@ class TestRunner {
 			i++;
 		}
 		this.latch=new CountDownLatch(Settings.getHWData().getNumThreads());
-		//System.out.println(this.threadStudentBreakup.size());
-		//System.out.println(this.threadStudentBreakup.toString());
 	}
 
 	private void createTestSuiteRunners(){
